@@ -1,136 +1,109 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Kalkulator Python Rinrin</title>
+<meta charset="UTF-8">
+<title>Kalkulator Bangun Datar - Python</title>
 
-    <!-- PyScript -->
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+<!-- PyScript versi stabil -->
+<link rel="stylesheet" href="https://pyscript.net/2023.11.1/pyscript.css">
+<script defer src="https://pyscript.net/2023.11.1/pyscript.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #f3e7ff, #e8dcff);
-            font-family: Arial, sans-serif;
-        }
-
-        .calculator {
-            background: white;
-            width: 320px;
-            padding: 20px;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-
-        h2 {
-            color: #7a4fd8;
-            margin-bottom: 15px;
-        }
-
-        input {
-            width: 100%;
-            height: 55px;
-            font-size: 24px;
-            text-align: right;
-            padding-right: 10px;
-            margin-bottom: 15px;
-            border-radius: 15px;
-            border: 1px solid #ccc;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        button {
-            height: 55px;
-            border-radius: 15px;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            background: #e6dcff;
-            color: #4b2fbf;
-        }
-
-        .operator {
-            background: #cdbdff;
-        }
-
-        .equal {
-            background: #a58bff;
-            color: white;
-        }
-
-        .clear {
-            grid-column: span 4;
-            background: #ffb6d5;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#f3e7ff,#e8dcff);
+    font-family:Arial;
+}
+.card{
+    background:white;
+    width:330px;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+    text-align:center;
+}
+h2{color:#7a4fd8}
+select,input,button{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+button{
+    background:#a58bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+#hasil{
+    margin-top:15px;
+    font-weight:bold;
+    font-size:18px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="calculator">
-    <h2>Kalkulator Python 💜</h2>
+<div class="card">
+<h2>Bangun Datar (Python)</h2>
 
-    <input id="layar" readonly>
+<select id="pilihan">
+    <option value="segitiga">Luas Segitiga</option>
+    <option value="lingkaran">Keliling Lingkaran</option>
+    <option value="persegi_l">Luas Persegi</option>
+    <option value="persegi_k">Keliling Persegi</option>
+</select>
 
-    <div class="buttons">
-        <button py-click="tekan('7')">7</button>
-        <button py-click="tekan('8')">8</button>
-        <button py-click="tekan('9')">9</button>
-        <button class="operator" py-click="tekan('/')">÷</button>
+<input id="a" type="number" placeholder="Angka 1">
+<input id="b" type="number" placeholder="Angka 2 (jika perlu)">
 
-        <button py-click="tekan('4')">4</button>
-        <button py-click="tekan('5')">5</button>
-        <button py-click="tekan('6')">6</button>
-        <button class="operator" py-click="tekan('*')">×</button>
+<button py-click="hitung()">Hitung</button>
 
-        <button py-click="tekan('1')">1</button>
-        <button py-click="tekan('2')">2</button>
-        <button py-click="tekan('3')">3</button>
-        <button class="operator" py-click="tekan('-')">−</button>
-
-        <button py-click="tekan('0')">0</button>
-        <button py-click="hapus()">⌫</button>
-        <button class="equal" py-click="hitung()">=</button>
-        <button class="operator" py-click="tekan('+')">+</button>
-
-        <button class="clear" py-click="bersih()">C</button>
-    </div>
+<div id="hasil">Hasil:</div>
 </div>
 
-<!-- KODE PYTHON (DISEMBUNYIKAN, TETAP DIJALANKAN) -->
-<py-script style="display:none">
+<!-- PYTHON -->
+<py-script>
 from js import document
-
-def tekan(x):
-    layar = document.getElementById("layar")
-    layar.value += x
-
-def hapus():
-    layar = document.getElementById("layar")
-    layar.value = layar.value[:-1]
-
-def bersih():
-    document.getElementById("layar").value = ""
+import math
 
 def hitung():
-    layar = document.getElementById("layar")
+    pilihan = document.getElementById("pilihan").value
+    a = document.getElementById("a").value
+    b = document.getElementById("b").value
+    hasil = ""
+
     try:
-        layar.value = str(eval(layar.value))
+        a = float(a) if a != "" else 0
+        b = float(b) if b != "" else 0
+
+        if pilihan == "segitiga":
+            hasil = 0.5 * a * b
+            teks = "Luas Segitiga"
+
+        elif pilihan == "lingkaran":
+            hasil = 2 * math.pi * a
+            teks = "Keliling Lingkaran"
+
+        elif pilihan == "persegi_l":
+            hasil = a * a
+            teks = "Luas Persegi"
+
+        elif pilihan == "persegi_k":
+            hasil = 4 * a
+            teks = "Keliling Persegi"
+
+        document.getElementById("hasil").innerText = f"{teks}: {hasil}"
+
     except:
-        layar.value = "Error"
+        document.getElementById("hasil").innerText = "Input tidak valid"
 </py-script>
 
 </body>
