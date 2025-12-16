@@ -2,9 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Kalkulator Bangun Datar - Python</title>
+<title>Kalkulator Python Rinrin</title>
 
-<!-- PyScript versi stabil -->
+<!-- PyScript STABIL -->
 <link rel="stylesheet" href="https://pyscript.net/2023.11.1/pyscript.css">
 <script defer src="https://pyscript.net/2023.11.1/pyscript.js"></script>
 
@@ -18,89 +18,102 @@ body{
     background:linear-gradient(135deg,#f3e7ff,#e8dcff);
     font-family:Arial;
 }
-.card{
+.calculator{
     background:white;
-    width:330px;
+    width:320px;
     padding:20px;
-    border-radius:20px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
     text-align:center;
 }
 h2{color:#7a4fd8}
-select,input,button{
+input{
     width:100%;
-    margin-top:10px;
-    padding:12px;
-    border-radius:12px;
+    height:55px;
+    font-size:24px;
+    text-align:right;
+    border-radius:15px;
     border:1px solid #ccc;
-    font-size:16px;
+    margin-bottom:15px;
+    padding-right:10px;
+}
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 button{
-    background:#a58bff;
-    color:white;
+    height:55px;
+    border-radius:15px;
     border:none;
-    cursor:pointer;
-}
-#hasil{
-    margin-top:15px;
-    font-weight:bold;
     font-size:18px;
+    background:#e6dcff;
+    color:#4b2fbf;
+}
+.operator{background:#cdbdff}
+.equal{background:#a58bff;color:white}
+.clear{
+    grid-column:span 4;
+    background:#ffb6d5;
+    color:white;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-<h2>Bangun Datar (Python)</h2>
+<div class="calculator">
+<h2>Kalkulator Python 💜</h2>
+<input id="layar" readonly>
 
-<select id="pilihan">
-    <option value="segitiga">Luas Segitiga</option>
-    <option value="lingkaran">Keliling Lingkaran</option>
-    <option value="persegi_l">Luas Persegi</option>
-    <option value="persegi_k">Keliling Persegi</option>
-</select>
+<div class="buttons">
+<button py-click="tekan('7')">7</button>
+<button py-click="tekan('8')">8</button>
+<button py-click="tekan('9')">9</button>
+<button class="operator" py-click="tekan('/')">÷</button>
 
-<input id="a" type="number" placeholder="Angka 1">
-<input id="b" type="number" placeholder="Angka 2 (jika perlu)">
+<button py-click="tekan('4')">4</button>
+<button py-click="tekan('5')">5</button>
+<button py-click="tekan('6')">6</button>
+<button class="operator" py-click="tekan('*')">×</button>
 
-<button py-click="hitung()">Hitung</button>
+<button py-click="tekan('1')">1</button>
+<button py-click="tekan('2')">2</button>
+<button py-click="tekan('3')">3</button>
+<button class="operator" py-click="tekan('-')">−</button>
 
-<div id="hasil">Hasil:</div>
+<button py-click="tekan('0')">0</button>
+<button py-click="hapus()">⌫</button>
+<button class="equal" py-click="hitung()">=</button>
+<button class="operator" py-click="tekan('+')">+</button>
+
+<button class="clear" py-click="bersih()">C</button>
 </div>
-    
-<script type="py">
+</div>
+
+<py-script style="display:none>
 from js import document
-import math
-
-def hitung(event): # Tambahkan parameter event untuk PyScript terbaru
-    pilihan = document.getElementById("pilihan").value
-    a = document.getElementById("a").value
-    b = document.getElementById("b").value
     
+layar = document.getElementById("layar")
+
+def tekan(event):
+    layar.value += event.target.innerText
+
+def hapus(event):
+    layar.value = layar.value[:-1]
+
+def bersih(event):
+    layar.value = ""
+
+def hitung(event):
     try:
-        val_a = float(a) if a != "" else 0
-        val_b = float(b) if b != "" else 0
+        layar.value = str(eval(layar.value))
+    except:
+        layar.value = "Error"
 
-        if pilihan == "segitiga":
-            hasil_calc = 0.5 * val_a * val_b
-            teks = "Luas Segitiga"
-        elif pilihan == "lingkaran":
-            hasil_calc = 2 * math.pi * val_a
-            teks = "Keliling Lingkaran"
-        elif pilihan == "persegi_l":
-            hasil_calc = val_a * val_a
-            teks = "Luas Persegi"
-        elif pilihan == "persegi_k":
-            hasil_calc = 4 * val_a
-            teks = "Keliling Persegi"
+    
+</py-script>
 
-        document.getElementById("hasil").innerText = f"{teks}: {hasil_calc:.2f}"
-
-    except Exception as e:
-        document.getElementById("hasil").innerText = "Input tidak valid"
-</script>
 </body>
 </html>
-    
-            
