@@ -68,43 +68,39 @@ button{
 
 <div id="hasil">Hasil:</div>
 </div>
-
-<!-- PYTHON -->
-<py-script style="display:none">
+    
+<script type="py">
 from js import document
 import math
 
-def hitung():
+def hitung(event): # Tambahkan parameter event untuk PyScript terbaru
     pilihan = document.getElementById("pilihan").value
     a = document.getElementById("a").value
     b = document.getElementById("b").value
-    hasil = ""
-
+    
     try:
-        a = float(a) if a != "" else 0
-        b = float(b) if b != "" else 0
+        val_a = float(a) if a != "" else 0
+        val_b = float(b) if b != "" else 0
 
         if pilihan == "segitiga":
-            hasil = 0.5 * a * b
+            hasil_calc = 0.5 * val_a * val_b
             teks = "Luas Segitiga"
-
         elif pilihan == "lingkaran":
-            hasil = 2 * math.pi * a
+            hasil_calc = 2 * math.pi * val_a
             teks = "Keliling Lingkaran"
-
         elif pilihan == "persegi_l":
-            hasil = a * a
+            hasil_calc = val_a * val_a
             teks = "Luas Persegi"
-
         elif pilihan == "persegi_k":
-            hasil = 4 * a
+            hasil_calc = 4 * val_a
             teks = "Keliling Persegi"
 
-        document.getElementById("hasil").innerText = f"{teks}: {hasil}"
+        document.getElementById("hasil").innerText = f"{teks}: {hasil_calc:.2f}"
 
-    except:
+    except Exception as e:
         document.getElementById("hasil").innerText = "Input tidak valid"
-</py-script>
-
+</script>
 </body>
 </html>
+    
+            
