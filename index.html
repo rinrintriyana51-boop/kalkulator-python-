@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Python</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 300px;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 8px 0;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #667eea;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #5563d6;
+            transform: scale(1.05);
+        }
+
+        #hasil {
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Kalkulator Python</h2>
+
+    <input id="a" type="number" placeholder="Angka pertama">
+    <input id="b" type="number" placeholder="Angka kedua">
+
+    <div class="buttons">
+        <button py-click="tambah()">+</button>
+        <button py-click="kurang()">−</button>
+        <button py-click="kali()">×</button>
+        <button py-click="bagi()">÷</button>
+    </div>
+
+    <div id="hasil">Hasil:</div>
+</div>
+
+<py-script>
+from js import document
+
+def get(id):
+    return float(document.getElementById(id).value)
+
+def tambah():
+    document.getElementById("hasil").innerText = "Hasil: " + str(get("a") + get("b"))
+
+def kurang():
+    document.getElementById("hasil").innerText = "Hasil: " + str(get("a") - get("b"))
+
+def kali():
+    document.getElementById("hasil").innerText = "Hasil: " + str(get("a") * get("b"))
+
+def bagi():
+    if get("b") == 0:
+        document.getElementById("hasil").innerText = "Tidak bisa dibagi 0"
+    else:
+        document.getElementById("hasil").innerText = "Hasil: " + str(get("a") / get("b"))
+</py-script>
+
+</body>
+  </html>
